@@ -174,6 +174,7 @@ def login_user(login_data: UserLogin):
     
     token = create_access_token({"user_id": user["id"], "role": user["role"]})
     user.pop("password", None)  # Remove password from response
+    user.pop("_id", None)  # Remove MongoDB ObjectId
     return {"access_token": token, "token_type": "bearer", "user": user}
 
 @app.get("/api/auth/me")
