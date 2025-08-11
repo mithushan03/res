@@ -255,10 +255,13 @@ def add_result(result: ResultInput, current_user: dict = Depends(get_current_use
             {"id": existing_result["id"]},
             {"$set": {**result_data, "id": existing_result["id"]}}
         )
+        result_data["id"] = existing_result["id"]
+        result_data.pop("_id", None)
         return {"message": "Result updated successfully", "result": result_data}
     else:
         # Create new result
         results_collection.insert_one(result_data)
+        result_data.pop("_id", None)
         return {"message": "Result added successfully", "result": result_data}
 
 @app.get("/api/results/student/{student_id}")
