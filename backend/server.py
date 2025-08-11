@@ -161,8 +161,9 @@ def register_user(user: User):
         "created_at": datetime.utcnow()
     }
     
-    users_collection.insert_one(user_data)
+    result = users_collection.insert_one(user_data)
     user_data.pop("password", None)  # Remove password from response
+    user_data.pop("_id", None)  # Remove MongoDB ObjectId
     return {"message": "User registered successfully", "user": user_data}
 
 @app.post("/api/auth/login")
