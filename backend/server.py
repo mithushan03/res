@@ -180,6 +180,7 @@ def login_user(login_data: UserLogin):
 @app.get("/api/auth/me")
 def get_current_user_info(current_user: dict = Depends(get_current_user)):
     current_user.pop("password", None)
+    current_user.pop("_id", None)
     return current_user
 
 @app.post("/api/subjects")
