@@ -201,7 +201,8 @@ def create_subject(subject: Subject, current_user: dict = Depends(get_current_us
         "created_at": datetime.utcnow()
     }
     
-    subjects_collection.insert_one(subject_data)
+    result = subjects_collection.insert_one(subject_data)
+    subject_data.pop("_id", None)  # Remove MongoDB ObjectId
     return {"message": "Subject created successfully", "subject": subject_data}
 
 @app.get("/api/subjects")
